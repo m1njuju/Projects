@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+}
+
+hr {
+    border-style: dotted;
+    color: gray;
+}
+h2 {
+    text-align: center;
+    background-color: rgb(26, 21, 93);
+    color: white;
+    padding: 30px;
+}
+
+header {
+    margin: 5px;
+    
+}
+
+ul {
+    overflow: auto;
+    list-style-type: none;
+}
+
+li {
+    float: left;
+    display: block;
+    padding: 10px 150px;
+}
+
+li>a {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+a:hover {
+    color: white;
+    font-size: bold;
+    text-shadow: 2px 2px 2px black;
+}
+
+.banner, .news, .notice {
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    overflow: auto;
+}
+
+nav {
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 350px;
+
+}
+.p_banner {
+    width: 200px;
+    height: 210px;
+    background-color: rgb(179, 179, 179);
+}
+
+section {
+    margin-left: 220px;
+    margin-right: 10px;
+}
+
+.news {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.notice {
+    margin-left: 20px;
+    margin-bottom: 100px;
+}
+
+
+.notice > p::after {
+    content: 'N';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(26, 21, 93);
+    color: white;
+    border-radius: 50%;
+    margin: 1px;
+    text-align: center;
+}
+
+footer {
+    clear: both;
+    text-align: center;
+    background-color: lightgray;
+    padding: 20px;
+    margin-top: 10px;
+}
