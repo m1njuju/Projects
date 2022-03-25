@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        <h1>메모</h1>
+
+        <!-- submit이벤트는 반드시 form 태그에 달아서 전달해야 한다 -->
+        <form v-on:submit.prevent="addMemo">
+            <input type="text" v-model="title">
+            <br>
+            <textarea cols="23" rows="10" v-model="memo"></textarea>
+            <input type="submit" value="추가" v-on:click="addMemo">
+        </form>
+        
+        <!-- js형식의 값(변수 혹은 데이터)을 넣으려면 v-를 이용한 디렉티브 사용 -->
+        <memo-component 
+            v-for="memo in memolist"
+            v-bind:key="memo.id"
+            v-bind:id="memo.id"
+            v-on:delete="deleteMemo"
+            >
+            <!-- 값만 바뀌는 부분을 slot을 이용하여 재사용-->
+            <!-- 이름 없는 슬롯에 접근할 때는 v-slot만 작성해서 사용하면 된다-->
+            <!-- v-slot:이름 대신 slot="이름"-->
+            <template v-slot:title>
+                {{memo.title}}
+            </template>
+            <template v-slot:memo>
+                {{memo.memo}}
+            </template>
+        </memo-component>
+    </div>
+
+    <!-- 메모 컴포넌트 추가 -->
+    <script src="./components/MemoComponent.js"></script>
+    <!-- 뷰인스턴스생성-->
+    <script>
+        new Vue({
+            el : '#app',
+            data : {
+                id : 1,
+                title : "",
+                memo : "",
+                memolist : [
+                    //화면을 보고 데이터가 어떤식으로 들어갈지 정함
+                    {
+                        id : 0, //삭제할 때 구분하기 위함
+                        title : "먼저 제목이 들어갑니다",
+                        memo : "메모도 동일하게 들어갑니다"
+                    }
+                ]
+            },
+            methods : {
+                addMemo : function(e) {
+                    e.preventDefault();
+                    //title과 memo의 값을 가져와서 memolist에 추가
+                    this.memolist.push( { 
+                        id : this.id,
+                        title : this.title, 
+                        memo : this.memo 
+                    } );
+                    this.id++; // id의 값을 겹치지 않게 하기 위해 1씩 증가
+                },
+                deleteMemo : function(id) {
+                    // memolist의 요소를 삭제함
+                    // 배열의 splice(인덱스, 개수) 메서드를 이용해서 삭제
+                    // 문제 : 배열의 요소가 객체이기에 인덱스를 찾는 함수 사용X
+                    // 해결 : 객체 안의 id값을 비교해서 index값을 찾아냄
+                    // 고민 : 배열의 값을 하나씩 비교하기 위한 방법 for, forEach()
+                    // 방법 : forEach()사용
+
+                    let index = 0;
+                    this.memolist.forEach((element, i) => {
+                        //모든 요소들의 id값을 비교하여 같다면 i값을 index에 할당
+                        if(element.id == id) {
+                            index =i;
+                        }
+                    });
+                    // index값을 찾은 후 삭제
+                    this.memolist.splice(index,1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
